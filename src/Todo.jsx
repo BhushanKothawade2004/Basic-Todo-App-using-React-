@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Todo() {
-    let [tasks, setTasks] = useState(["Sample Task"]);
+    let [tasks, setTasks] = useState([{task: "sample task", id: uuidv4()}]);
     let [newTasks, setNewTasks] = useState("");
 
     let updateTaskValue = (event) => {
@@ -9,17 +10,16 @@ export default function Todo() {
     }
 
     let addNewTask = () => {
-        if (tasks[0] === "Sample Task") {
-            // Replace "Sample Task" with the new task
-            setTasks([newTasks, ...tasks.slice(1)]);
+        if (tasks.length === 1 && tasks[0].task === "sample task") {
+            // Replace "sample task" with the new task
+            setTasks([{ task: newTasks, id: uuidv4() }]);
         } else {
             // Add the new task to the list
-            setTasks([...tasks, newTasks]);
-            setNewTasks("")
+            setTasks([...tasks, { task: newTasks, id: uuidv4() }]);
         }
-
-        // setTasks([...tasks, newTasks]);
+        setNewTasks("");
     }
+
      return (
         <div>
             <h2>Todo App</h2>
@@ -32,8 +32,8 @@ export default function Todo() {
             <br /><br />
             <h3>Tasks To-do Today</h3>
             <ol>
-                {tasks.map((task) => (
-                    <li>{task}</li>
+                {tasks.map((tasks) => (
+                    <li key={tasks.id}>{tasks.task}</li>
                 ))}
             </ol>
         </div>
