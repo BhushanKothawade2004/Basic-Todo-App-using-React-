@@ -9,9 +9,16 @@ export default function Todo() {
     }
 
     let addNewTask = () => {
-        
-        setTasks([...tasks, newTasks]);
-        setNewTasks("")
+        if (tasks[0] === "Sample Task") {
+            // Replace "Sample Task" with the new task
+            setTasks([newTasks, ...tasks.slice(1)]);
+        } else {
+            // Add the new task to the list
+            setTasks([...tasks, newTasks]);
+            setNewTasks("")
+        }
+
+        // setTasks([...tasks, newTasks]);
     }
      return (
         <div>
